@@ -1,0 +1,65 @@
+[
+  {
+    "id": "boc",
+    "app": "澳門中銀手機銀行",
+    "publisher": "Bank of China Limited, Macau Branch",
+    "source": "https://apps.apple.com/mo/app/%E6%BE%B3%E9%96%80%E4%B8%AD%E9%8A%80%E6%89%8B%E6%A9%9F%E9%8A%80%E8%A1%8C/id479179008?uo=4",
+    "image": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/26/20/ee/2620eeaa-aed2-7ce1-8ac6-bc8f28a58153/AppIcon-1x_U007emarketing-0-8-0-0-sRGB-85-220-0.png/512x512bb.jpg",
+    "date": "2026-10-26",
+    "file": "logo-boc.jpg"
+  },
+  {
+    "id": "icbc",
+    "app": "ICBC Mobile Banking",
+    "publisher": "Industrial and Commercial Bank of China",
+    "source": "https://apps.apple.com/mo/app/icbc-mobile-banking/id584398176?uo=4",
+    "image": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/4d/17/c3/4d17c329-fa34-ac0f-e97c-d1039d1f942e/AppIcon-0-0-1x_U007emarketing-0-7-0-sRGB-85-220.png/512x512bb.jpg",
+    "date": "2026-10-26",
+    "file": "logo-icbc.jpg"
+  },
+  {
+    "id": "mpay",
+    "app": "MPay澳門錢包",
+    "publisher": "Macau Pass S.A.",
+    "source": "https://apps.apple.com/mo/app/mpay%E6%BE%B3%E9%96%80%E9%8C%A2%E5%8C%85/id1092594338?uo=4",
+    "image": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/d9/91/46/d991460b-36e8-44eb-a21d-77fc54abc0c0/AppIcon-0-0-1x_U007emarketing-0-6-0-sRGB-85-220.png/512x512bb.jpg",
+    "date": "2026-10-26",
+    "file": "logo-mpay.jpg"
+  },
+  {
+    "id": "luso",
+    "app": "澳門國際銀行個人手機銀行",
+    "publisher": "Luso International Banking Limited",
+    "source": "https://apps.apple.com/mo/app/%E6%BE%B3%E9%96%80%E5%9C%8B%E9%9A%9B%E9%8A%80%E8%A1%8C%E5%80%8B%E4%BA%BA%E6%89%8B%E6%A9%9F%E9%8A%80%E8%A1%8C/id1014923812?uo=4",
+    "image": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/66/27/de/6627de41-d763-b2bf-cac5-e9eea66be842/AppIcon-0-0-1x_U007emarketing-0-8-0-0-85-220.png/512x512bb.jpg",
+    "date": "2026-10-26",
+    "file": "logo-luso.jpg"
+  },
+  {
+    "id": "uepay",
+    "app": "UePay",
+    "publisher": "UEPAY MACAO LIMITED",
+    "source": "https://apps.apple.com/mo/app/uepay/id1262244387?uo=4",
+    "image": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/ed/70/8c/ed708c24-cabe-eb3d-bfcd-7abaca2552bb/AppIcon-0-0-1x_U007emarketing-0-7-0-sRGB-85-220.png/512x512bb.jpg",
+    "date": "2026-10-26",
+    "file": "logo-uepay.jpg"
+  },
+  {
+    "id": "cgb",
+    "app": "廣發銀行海外",
+    "publisher": "China Guangfa Bank Co., Ltd",
+    "source": "https://apps.apple.com/mo/app/%E5%BB%A3%E7%99%BC%E9%8A%80%E8%A1%8C%E6%B5%B7%E5%A4%96/id1002337256?uo=4",
+    "image": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/2c/16/34/2c16342c-e51f-922f-65ff-28a5b36662d7/AppIcon-1x_U007emarketing-0-11-0-0-sRGB-85-220-0.png/512x512bb.jpg",
+    "date": "2026-10-26",
+    "file": "logo-cgb.jpg"
+  },
+  {
+    "id": "alipay",
+    "app": "支付宝 - 生活好，支付宝",
+    "publisher": "Alipay (Hangzhou) Technology Co., Ltd.",
+    "source": "https://apps.apple.com/mo/app/%E6%94%AF%E4%BB%98%E5%AE%9D-%E7%94%9F%E6%B4%BB%E5%A5%BD-%E6%94%AF%E4%BB%98%E5%AE%9D/id333206289?uo=4",
+    "image": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/9d/f5/0b/9df50b9c-2ebe-bb6b-bcc0-fb4ac366ba94/AppIcon-0-0-1x_U007epad-0-1-0-85-220.png/512x512bb.jpg",
+    "date": "2026-10-26",
+    "file": "logo-alipay.jpg"
+  }
+]
