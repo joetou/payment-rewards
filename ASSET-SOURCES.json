@@ -61,5 +61,20 @@
     "image": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/9d/f5/0b/9df50b9c-2ebe-bb6b-bcc0-fb4ac366ba94/AppIcon-0-0-1x_U007epad-0-1-0-85-220.png/512x512bb.jpg",
     "date": "2026-10-26",
     "file": "logo-alipay.jpg"
+  },
+  {
+    "id": "taifung",
+    "app": "豐付寶",
+    "publisher": "TAI FUNG BANK LIMITED",
+    "source": "https://apps.apple.com/mo/app/%E8%B1%90%E4%BB%98%E5%AF%B6/id500132293?uo=4",
+    "image": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/c7/d7/35/c7d73557-b8e8-8cb8-7e39-731928086431/AppIcon-0-0-1x_U007emarketing-0-7-0-85-220.png/512x512bb.jpg",
+    "date": "2026-10-26",
+    "file": "logo-taifung.jpg"
+  },
+  {
+    "id": "banner",
+    "source": "使用者提供的2026社區消費連環賞banner，原圖直接使用",
+    "date": "2026-10-26",
+    "file": "campaign-banner.png"
   }
 ]

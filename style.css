@@ -25,3 +25,22 @@ button.subtotal{padding:4px 8px;min-height:44px}
 nav{padding:4px 12px calc(4px + env(safe-area-inset-bottom))}nav button{font-size:18px;padding:5px 12px;min-height:48px}nav span{font-size:11px;margin-top:1px}
 #status{bottom:78px}
 @media(max-width:360px){.card{padding:8px 10px}.card .name small{font-size:9px}.slots{gap:6px}}
+
+/* v0.3: cheerful campaign colours, compact two-row bank cards */
+:root{color:#593349;background:#fff6ed}
+header{background:linear-gradient(115deg,#e65382,#d13f70);padding:0 max(0px,calc((100vw - 760px)/2)) 8px}
+.campaign-banner{display:block;width:100%;height:auto;max-width:760px;margin:0 auto}
+#summary{padding:8px 20px 2px;gap:10px}#summary small{color:#fff4e2}#summary strong{color:#fff}#summary div:last-child strong{color:#fff2a8}
+main{padding-top:10px}.tag{background:#fff0cd;border-color:#f4d58d;color:#8b5c22}
+#guide,.privacy,#period{color:#906b75}
+.card{border-color:#f3d9d7;background:#fffdf9;box-shadow:0 3px 10px #bd5d6310}
+.card:nth-child(3n+1){border-left:3px solid #ee83a2}.card:nth-child(3n+2){border-left:3px solid #f2bb59}.card:nth-child(3n){border-left:3px solid #78cfc2}
+.name small{color:#9a7c87}.subtotal{color:#a16b7b}.subtotal strong{color:#a43261}
+button{color:#9a3e62;background:#fff0e9}button.subtotal{background:#ffe8ee}
+.slot{background:#fff2df;border-color:#f6dfba;color:#884f28}
+.slot.used{background:#f5efee;color:#9b8b91;border-color:#e8dddd}
+.panel{border-color:#f3dbd5;background:#fffdf9}.panel p{color:#8a6875}
+.primary{background:#cf4376;color:white}.secondary{background:#fff0e2}
+nav{background:#fffaf3f5;border-color:#f2dcd4}nav button{background:transparent;color:#aa8c91}nav button.active{background:#ffe1ea;color:#b72e64}
+#status{background:#9f355c}button:focus-visible,input:focus-visible{outline-color:#c53e72}
+dialog::backdrop{background:#59334988}.hint{color:#997888}
