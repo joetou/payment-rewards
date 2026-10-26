@@ -2,6 +2,9 @@
 const R=Rewards,KEY='joetou.payment-rewards.v2',LEGACY_KEY='joetou.payment-rewards.v1';
 const $=id=>document.getElementById(id),escapeText=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let state=R.fresh(),tab='entry',editing=null,undo=null,timer,boundaryTimer,readError=false,demoMode=false;
+const LAST_TAB_KEY='joetou.payment-rewards.last-tab';
+try{const previous=JSON.parse(localStorage.getItem(LAST_TAB_KEY));if(previous==='entry'||previous==='redeem')tab=previous;}catch(_){}
+function rememberMainTab(value){if(value!=='entry'&&value!=='redeem')return;try{localStorage.setItem(LAST_TAB_KEY,JSON.stringify(value));}catch(_){}}
 try{
  const sourceRaw=localStorage.getItem(KEY)||localStorage.getItem(LEGACY_KEY);
  if(sourceRaw)state=R.upgrade(JSON.parse(sourceRaw));
@@ -108,7 +111,7 @@ $('amounts').onclick=async e=>{
  if(state.records[id][i].redeemed&&!await ask('這項已核銷。修改金額會取消該項核銷，是否繼續？'))return;
  if(change(s=>s.records[id][i]={amount,redeemed:false},'獎金已儲存。'))$('picker').close();
 };
-document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{syncPeriod();demoMode=false;tab=b.dataset.tab;window.trackUsage?.('tab_'+tab);render();window.scrollTo({top:0,behavior:'smooth'});});
+document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{syncPeriod();demoMode=false;tab=b.dataset.tab;rememberMainTab(tab);window.trackUsage?.('tab_'+tab);render();window.scrollTo({top:0,behavior:'smooth'});});
 window.addEventListener('storage',e=>{if(e.key===KEY){undo=null;if(!readError){syncPeriod();toast('已載入另一分頁的最新資料。');}}});
 window.addEventListener('focus',()=>syncPeriod(true));
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')syncPeriod(true);});
