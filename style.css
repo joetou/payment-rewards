@@ -44,3 +44,20 @@ button{color:#9a3e62;background:#fff0e9}button.subtotal{background:#ffe8ee}
 nav{background:#fffaf3f5;border-color:#f2dcd4}nav button{background:transparent;color:#aa8c91}nav button.active{background:#ffe1ea;color:#b72e64}
 #status{background:#9f355c}button:focus-visible,input:focus-visible{outline-color:#c53e72}
 dialog::backdrop{background:#59334988}.hint{color:#997888}
+
+/* v0.4: weekly archive and statistics */
+nav button{width:min(24%,150px)}
+.history-overview{margin-top:8px;padding:14px}.history-overview h3{font-size:16px}
+.history-overview p{font-size:12px;margin:8px 0}
+.history-table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+.history-table th,.history-table td{padding:10px 6px;border-bottom:1px solid #f2ded8;text-align:right}
+.history-table th:first-child{text-align:left}.history-table a{color:#a43261;text-decoration:none;display:block;min-height:44px}
+.history-table th[scope=row]{font-weight:500}.history-table span{display:block;white-space:nowrap}
+.history-table small{display:block;font-size:11px;color:#906b75;margin-top:4px;white-space:nowrap}
+.history-heading{font-size:17px;margin:22px 0 8px}
+.history-period{margin:12px 0 20px;scroll-margin-top:12px}
+.history-period>summary{cursor:pointer;padding:12px;background:#ffe5d5;border:1px solid #f3ceb9;border-radius:12px;line-height:1.6;font-size:13px;color:#854a3d;min-height:44px}
+.history-period>summary strong{font-size:13px}.history-period>summary span{display:block;font-size:12px;margin-top:3px}
+.snapshot-card .slot{display:flex;justify-content:center;align-items:center;cursor:default;min-height:40px;font-size:19px}
+.snapshot-card .slot.used:after{display:inline}.snapshot-card .card-head{margin-bottom:6px}
+.history-period .card{margin-top:6px}.history-period .card .name strong{font-size:14px}
