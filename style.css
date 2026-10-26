@@ -61,3 +61,6 @@ nav button{width:min(24%,150px)}
 .snapshot-card .slot{display:flex;justify-content:center;align-items:center;cursor:default;min-height:40px;font-size:19px}
 .snapshot-card .slot.used:after{display:inline}.snapshot-card .card-head{margin-bottom:6px}
 .history-period .card{margin-top:6px}.history-period .card .name strong{font-size:14px}
+
+/* v0.5: isolated statistics preview */
+.demo-controls{padding:14px;margin-top:8px}.demo-controls h3{font-size:16px;margin-bottom:6px}.demo-controls p{margin:0 0 12px;font-size:12px;line-height:1.6}.demo-controls button{min-height:44px}.demo-controls.is-demo{border:2px solid #e6a545;background:#fff4d4}
