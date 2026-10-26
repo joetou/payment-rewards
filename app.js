@@ -42,7 +42,7 @@ function syncPeriod(silent=false){
 function change(fn,message,allowUndo=false){
  const result=syncPeriod();if(!result.ok||result.rolled)return false;
  const before=structuredClone(state),next=structuredClone(state);fn(next);
- if(save(next)){undo=allowUndo?{before,after:JSON.stringify(state)}:null;toast(message,allowUndo);return true;}return false;
+ if(save(next)){undo=allowUndo?{before,after:JSON.stringify(state)}:null;toast(message,allowUndo);const event=({'獎金已儲存。':'reward_saved','核銷狀態已更新。':'redeem_toggled','已全部核銷。':'redeem_all'})[message];if(event)window.trackUsage?.(event);return true;}return false;
 }
 function label(id,names=state.names){return names[id]||R.catalog.find(c=>c[0]===id)[1];}
 function logo(c){return c[0].startsWith('other')?`<div class="logo" style="background:${c[3]}" aria-hidden="true">${escapeText(c[1])}</div>`:`<div class="logo app-logo"><img src="logo-${c[0]}.jpg" alt="${escapeText(c[1])}圖示" width="44" height="44"></div>`;}
@@ -80,11 +80,11 @@ function renderStats(){
 }
 function renderSettings(){
  const row=(c,selected,index)=>`<div class="manage" draggable="true" data-drag="${c[0]}">${logo(c)}<div class="name"><strong>${escapeText(label(c[0]))}</strong><small>${!selected&&R.totals(state.records[c[0]]).left?`待核銷 ${R.totals(state.records[c[0]]).left} 元`:escapeText(c[2])}</small></div>${selected?`<button data-move="${c[0]}:-1" aria-label="上移${escapeText(label(c[0]))}" ${index===0?'disabled':''}>↑</button><button data-move="${c[0]}:1" aria-label="下移${escapeText(label(c[0]))}" ${index===state.selected.length-1?'disabled':''}>↓</button>`:''}<button data-toggle="${c[0]}">${selected?'移出':'加入'}</button>${c[0].startsWith('other')?`<input data-name="${c[0]}" maxlength="20" aria-label="${escapeText(c[1])}自訂名稱" placeholder="自訂名稱" value="${escapeText(state.names[c[0]]||'')}">`:''}</div>`;
- $('content').innerHTML=`<section class="panel"><h3>使用說明</h3><p>四個步驟學會記錄獎金、核銷及查看統計。</p><a class="primary" href="help.html" style="display:inline-block;text-decoration:none;padding:12px 18px;border-radius:12px">？ 圖文使用說明</a></section><section class="panel" data-area="mine"><h3>我的支付 App · ${state.selected.length}</h3>${state.selected.map((id,i)=>row(R.catalog.find(c=>c[0]===id),true,i)).join('')||'<p>從下方加入支付 App。</p>'}</section><section class="panel" data-area="others"><h3>其他可選支付 App</h3>${R.catalog.filter(c=>!state.selected.includes(c[0])).map(c=>row(c,false,0)).join('')||'<p>所有 App 已加入。</p>'}<p class="hint">可拖拉搬移；亦可使用加入、移出及箭頭按鈕。移出不會刪除金額。</p></section><section class="panel"><h3>自動換期及歷史</h3><p>按澳門時間，每週五 00:00 先保存全部支付 App 的快照，再開始新一期。網頁關閉時，下次開啟會補做；期間沒有記錄的週會以零元保存。毋須人手重置。</p><p>期間：${R.periodLabel(state.periodStart)}。按裝置時間判斷，請保持裝置日期正確。可在底部「統計」查看以前各期。</p></section><section class="panel"><h3>加入主畫面</h3><p>iPhone：以 Safari 開啟網址，從分享選單選擇「加入主畫面」。Android 及電腦 Chrome：從瀏覽器選單尋找安裝或加入主畫面選項。</p><p>首次開啟需連線。離線快取就緒後可離線使用。網站更新會保留已記錄資料。</p><p class="hint">圖示採用官方 App Store 的銀行／錢包 App 圖示。本工具只作個人記錄，核銷標記不會操作任何支付帳戶。</p></section>`;
+ $('content').innerHTML=`<section class="panel"><h3>使用說明</h3><p>四個步驟學會記錄獎金、核銷及查看統計。</p><a class="primary" href="help.html" style="display:inline-block;text-decoration:none;padding:12px 18px;border-radius:12px">？ 圖文使用說明</a></section><section class="panel" data-area="mine"><h3>我的支付 App · ${state.selected.length}</h3>${state.selected.map((id,i)=>row(R.catalog.find(c=>c[0]===id),true,i)).join('')||'<p>從下方加入支付 App。</p>'}</section><section class="panel" data-area="others"><h3>其他可選支付 App</h3>${R.catalog.filter(c=>!state.selected.includes(c[0])).map(c=>row(c,false,0)).join('')||'<p>所有 App 已加入。</p>'}<p class="hint">可拖拉搬移；亦可使用加入、移出及箭頭按鈕。移出不會刪除金額。</p></section><section class="panel"><h3>私隱及使用統計</h3><p>獎金、銀行名單及核銷紀錄只保存在你的裝置，不會傳送至統計服務。網站使用 GoatCounter 統計瀏覽量、估算訪客、來源、裝置及功能操作次數；不傳送銀行名稱、金額或自訂名稱，亦不使用追蹤 Cookie。</p><p>統計服務會處理連線 IP 及瀏覽器資訊以估算訪客；並非完全沒有資料傳送。離線及阻擋統計時仍可正常使用。</p><p><a href="https://www.goatcounter.com/help/privacy" target="_blank" rel="noopener noreferrer">GoatCounter 私隱說明</a></p></section><section class="panel"><h3>自動換期及歷史</h3><p>按澳門時間，每週五 00:00 先保存全部支付 App 的快照，再開始新一期。網頁關閉時，下次開啟會補做；期間沒有記錄的週會以零元保存。毋須人手重置。</p><p>期間：${R.periodLabel(state.periodStart)}。按裝置時間判斷，請保持裝置日期正確。可在底部「統計」查看以前各期。</p></section><section class="panel"><h3>加入主畫面</h3><p>iPhone：以 Safari 開啟網址，從分享選單選擇「加入主畫面」。Android 及電腦 Chrome：從瀏覽器選單尋找安裝或加入主畫面選項。</p><p>首次開啟需連線。離線快取就緒後可離線使用。網站更新會保留已記錄資料。</p><p class="hint">圖示採用官方 App Store 的銀行／錢包 App 圖示。本工具只作個人記錄，核銷標記不會操作任何支付帳戶。</p></section>`;
 }
 $('content').onclick=e=>{
  const b=e.target.closest('button');if(!b)return;
- if(b.dataset.demo){demoMode=b.dataset.demo==='on';render();window.scrollTo({top:0,behavior:'smooth'});return;}
+ if(b.dataset.demo){demoMode=b.dataset.demo==='on';window.trackUsage?.(demoMode?'demo_opened':'demo_closed');render();window.scrollTo({top:0,behavior:'smooth'});return;}
  if(b.dataset.slot){
   const result=syncPeriod();if(!result.ok||result.rolled)return;
   const [id,n]=b.dataset.slot.split(':'),i=Number(n);
@@ -108,7 +108,7 @@ $('amounts').onclick=async e=>{
  if(state.records[id][i].redeemed&&!await ask('這項已核銷。修改金額會取消該項核銷，是否繼續？'))return;
  if(change(s=>s.records[id][i]={amount,redeemed:false},'獎金已儲存。'))$('picker').close();
 };
-document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{syncPeriod();demoMode=false;tab=b.dataset.tab;render();window.scrollTo({top:0,behavior:'smooth'});});
+document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{syncPeriod();demoMode=false;tab=b.dataset.tab;window.trackUsage?.('tab_'+tab);render();window.scrollTo({top:0,behavior:'smooth'});});
 window.addEventListener('storage',e=>{if(e.key===KEY){undo=null;if(!readError){syncPeriod();toast('已載入另一分頁的最新資料。');}}});
 window.addEventListener('focus',()=>syncPeriod(true));
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')syncPeriod(true);});
