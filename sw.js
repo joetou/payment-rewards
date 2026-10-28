@@ -1,4 +1,4 @@
-const CACHE='joetou-payment-rewards-v10';
+const CACHE='joetou-payment-rewards-v11';
 const ASSETS=['./','./index.html','./help.html','./user-guide.png','./style.css','./core.js','./app.js','./analytics.js','./manifest.webmanifest','./campaign-banner.png','./logo-taifung.jpg','./icon.svg','./icon-192.png','./icon-512.png','./logo-boc.jpg','./logo-icbc.jpg','./logo-mpay.jpg','./logo-luso.jpg','./logo-cgb.jpg','./logo-alipay.jpg','./logo-uepay.jpg'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)));});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('joetou-payment-rewards-')&&k!==CACHE).map(k=>caches.delete(k)))));});
