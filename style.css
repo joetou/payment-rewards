@@ -64,3 +64,6 @@ nav button{width:min(24%,150px)}
 
 /* v0.5: isolated statistics preview */
 .demo-controls{padding:14px;margin-top:8px}.demo-controls h3{font-size:16px;margin-bottom:6px}.demo-controls p{margin:0 0 12px;font-size:12px;line-height:1.6}.demo-controls button{min-height:44px}.demo-controls.is-demo{border:2px solid #e6a545;background:#fff4d4}
+
+/* Navigation artwork uses currentColor for active and inactive states. */
+nav .nav-icon{display:block;width:26px;height:26px;margin:0 auto;vertical-align:middle}
