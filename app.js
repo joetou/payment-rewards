@@ -52,8 +52,8 @@ function logo(c){return c[0].startsWith('other')?`<div class="logo" style="backg
 function bankCard(id,records,names,mode,readonly=false){
  const c=R.catalog.find(x=>x[0]===id),rows=records[id],t=R.totals(rows),name=escapeText(label(id,names));
  return `<article class="card${readonly?' snapshot-card':''}"><div class="card-head">${logo(c)}<div class="name"><strong>${name}</strong><small>${escapeText(c[2])}</small></div>${mode==='redeem'&&!readonly?`<button class="subtotal" data-batch="${id}" aria-label="${name}全部核銷，待核銷${t.left}元" ${!t.left?'disabled':''}>待核銷<strong>${t.left}</strong></button>`:`<div class="subtotal">${readonly?'待核銷':'總額'}<strong>${readonly?t.left:t.total}</strong></div>`}</div><div class="slots">${rows.map((x,i)=>{
- const cls=`slot ${x.redeemed?'used':''}`,text=`${name}第${i+1}項，${x.amount}元，${x.redeemed?'已核銷':'未核銷'}`;
- return readonly?`<div class="${cls}" aria-label="${text}"><span>${x.amount}</span></div>`:`<button class="${cls}" data-slot="${id}:${i}" ${mode==='redeem'&&!x.amount?'disabled':''} aria-label="${text}"><span>${x.amount}</span></button>`;
+ const cls=`slot ${x.redeemed?'used':''}`,text=`${name}第${i+1}項，${R.resultLabel(x)}${x.amount>0?'元':''}，${x.redeemed?'已核銷':'未核銷'}`;
+ return readonly?`<div class="${cls}" aria-label="${text}"><span>${R.resultLabel(x)}</span></div>`:`<button class="${cls}" data-slot="${id}:${i}" ${mode==='redeem'&&!x.amount?'disabled':''} aria-label="${text}"><span>${R.resultLabel(x)}</span></button>`;
  }).join('')}</div></article>`;
 }
 function render(){
@@ -103,13 +103,13 @@ let dragging=null;
 $('content').ondragstart=e=>{const row=e.target.closest('[data-drag]');if(row){dragging=row.dataset.drag;e.dataTransfer.setData('text/plain',dragging);}};
 $('content').ondragover=e=>{if(e.target.closest('[data-area]'))e.preventDefault();};
 $('content').ondrop=e=>{const area=e.target.closest('[data-area]'),target=e.target.closest('[data-drag]')?.dataset.drag;if(!area||!dragging)return;e.preventDefault();const id=dragging;dragging=null;change(s=>{s.selected=s.selected.filter(x=>x!==id);if(area.dataset.area==='mine'){const i=target?s.selected.indexOf(target):-1;s.selected.splice(i<0?s.selected.length:i,0,id);}},'名單及排序已儲存。');};
-$('amounts').innerHTML=R.amounts.map(x=>`<button type="button" data-amount="${x}">${x}</button>`).join('');
+$('amounts').innerHTML=R.amounts.map(x=>`<button type="button" data-amount="${x}">${x}元</button>`).join('');
 $('amounts').onclick=async e=>{
  const b=e.target.closest('[data-amount]');if(!b||!editing)return;const {id,i}=editing,amount=Number(b.dataset.amount);
  if(!syncPeriod().ok||!editing)return;
- if(state.records[id][i].amount===amount){$('picker').close();return;}
+ if(state.records[id][i].amount===amount&&R.hasResult(state.records[id][i])){$('picker').close();return;}
  if(state.records[id][i].redeemed&&!await ask('這項已核銷。修改金額會取消該項核銷，是否繼續？'))return;
- if(change(s=>s.records[id][i]={amount,redeemed:false},'獎金已儲存。'))$('picker').close();
+ if(change(s=>s.records[id][i]={amount,redeemed:false,recorded:true},'獎金已儲存。'))$('picker').close();
 };
 document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{syncPeriod();demoMode=false;tab=b.dataset.tab;rememberMainTab(tab);window.trackUsage?.('tab_'+tab);render();window.scrollTo({top:0,behavior:'smooth'});});
 window.addEventListener('storage',e=>{if(e.key===KEY){undo=null;if(!readError){syncPeriod();toast('已載入另一分頁的最新資料。');}}});

@@ -3,7 +3,7 @@
 const amounts=[0,10,20,50,100,200],DAY=86400000,OFFSET=8*3600000;
 const catalog=[['boc','中銀','澳門中銀手機銀行','#b51e30'],['icbc','工商','工銀e支付','#c72c30'],['mpay','MPay','澳門錢包','#e27725'],['luso','國際','LusoPay','#16756e'],['cgb','廣發','廣發移動支付','#b62c39'],['alipay','支付寶','Alipay','#1677ff'],['uepay','UePay','澳門錢包','#7150a4'],['taifung','豐付寶','大豐銀行','#c7173b'],['other1','其他1','自訂支付工具','#52677e'],['other2','其他2','自訂支付工具','#52677e']];
 const clone=x=>JSON.parse(JSON.stringify(x));
-const blank=()=>Object.fromEntries(catalog.map(([id])=>[id,[0,0,0].map(()=>({amount:0,redeemed:false}))]));
+const blank=()=>Object.fromEntries(catalog.map(([id])=>[id,[0,0,0].map(()=>({amount:0,redeemed:false,recorded:false}))]));
 function addDays(date,days){return new Date(Date.parse(date+'T00:00:00Z')+days*DAY).toISOString().slice(0,10);}
 function periodAt(now=Date.now()){
  const local=new Date(now+OFFSET),date=local.toISOString().slice(0,10),start=addDays(date,-((local.getUTCDay()+2)%7));
@@ -17,7 +17,7 @@ function checkFields(s){
  if(!s.names||typeof s.names!=='object'||Array.isArray(s.names))throw Error('名稱格式不正確');
  for(const [id,name]of Object.entries(s.names))if(!['other1','other2'].includes(id)||typeof name!=='string'||name.length>20)throw Error('自訂名稱不正確');
  if(!s.records||typeof s.records!=='object'||Array.isArray(s.records))throw Error('獎金資料不正確');
- for(const [id]of catalog){const r=s.records[id];if(!Array.isArray(r)||r.length!==3||r.some(x=>!x||!amounts.includes(x.amount)||typeof x.redeemed!=='boolean'||(x.amount===0&&x.redeemed)))throw Error('獎金資料不正確');}
+ for(const [id]of catalog){const r=s.records[id];if(!Array.isArray(r)||r.length!==3||r.some(x=>!x||!amounts.includes(x.amount)||typeof x.redeemed!=='boolean'||(x.recorded!==undefined&&typeof x.recorded!=='boolean')||(x.amount===0&&x.redeemed)))throw Error('獎金資料不正確');}
  if(Object.keys(s.records).some(id=>!catalog.some(c=>c[0]===id)))throw Error('不明支付 App 資料');
 }
 function fillLegacyBank(s){if(s?.records&&typeof s.records==='object'&&!Object.hasOwn(s.records,'taifung'))s.records.taifung=blank().taifung;}
@@ -64,5 +64,7 @@ function rollover(s,now=Date.now()){
  next.updatedAt=now;validate(next);Object.assign(s,next);return count;
 }
 const totals=rows=>rows.reduce((a,x)=>({total:a.total+x.amount,used:a.used+(x.redeemed?x.amount:0),left:a.left+(x.redeemed?0:x.amount)}),{total:0,used:0,left:0});
-const api={amounts,catalog,fresh,validate,upgrade,rollover,totals,periodAt,periodLabel,addDays};root.Rewards=api;if(typeof module!=='undefined')module.exports=api;
+const hasResult=x=>x.amount>0||x.recorded===true;
+const resultLabel=x=>hasResult(x)?(x.amount===0?'重在參與':String(x.amount)):'未抽';
+const api={hasResult,resultLabel,amounts,catalog,fresh,validate,upgrade,rollover,totals,periodAt,periodLabel,addDays};root.Rewards=api;if(typeof module!=='undefined')module.exports=api;
 })(globalThis);

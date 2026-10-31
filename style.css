@@ -67,3 +67,5 @@ nav button{width:min(24%,150px)}
 
 /* Navigation artwork uses currentColor for active and inactive states. */
 nav .nav-icon{display:block;width:26px;height:26px;margin:0 auto;vertical-align:middle}
+
+.slots .slot{font-size:17px;white-space:nowrap}
