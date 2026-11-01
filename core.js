@@ -65,6 +65,6 @@ function rollover(s,now=Date.now()){
 }
 const totals=rows=>rows.reduce((a,x)=>({total:a.total+x.amount,used:a.used+(x.redeemed?x.amount:0),left:a.left+(x.redeemed?0:x.amount)}),{total:0,used:0,left:0});
 const hasResult=x=>x.amount>0||x.recorded===true;
-const resultLabel=x=>hasResult(x)?(x.amount===0?'重在參與':String(x.amount)):'未抽';
+const resultLabel=x=>hasResult(x)?(x.amount===0?'謝謝參與':String(x.amount)):'未抽';
 const api={hasResult,resultLabel,amounts,catalog,fresh,validate,upgrade,rollover,totals,periodAt,periodLabel,addDays};root.Rewards=api;if(typeof module!=='undefined')module.exports=api;
 })(globalThis);
