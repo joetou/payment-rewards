@@ -118,4 +118,4 @@ document.addEventListener('visibilitychange',()=>{if(document.visibilityState===
 setInterval(()=>{if(document.visibilityState==='visible')syncPeriod(true);},30000);
 render();scheduleBoundary();
 if(readError){tab='settings';render();$('panel-dialog').showModal();toast('資料無法安全儲存，已停用修改。請檢查裝置空間後重新開啟。');}
-if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').then(()=>navigator.serviceWorker.ready).then(()=>{if(!sessionStorage.getItem('offline-notice')){toast('離線快取已就緒。');sessionStorage.setItem('offline-notice','1');}}).catch(()=>toast('離線快取未完成；目前仍可在線使用。'));
+window.canApplyAppUpdate=()=>!editing&&!readError;
