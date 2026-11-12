@@ -17,7 +17,7 @@ function checkFields(s){
  if(!s.names||typeof s.names!=='object'||Array.isArray(s.names))throw Error('名稱格式不正確');
  for(const [id,name]of Object.entries(s.names))if(!['other1','other2'].includes(id)||typeof name!=='string'||name.length>20)throw Error('自訂名稱不正確');
  if(!s.records||typeof s.records!=='object'||Array.isArray(s.records))throw Error('獎金資料不正確');
- for(const [id]of catalog){const r=s.records[id];if(!Array.isArray(r)||r.length!==3||r.some(x=>!x||!amounts.includes(x.amount)||typeof x.redeemed!=='boolean'||(x.recorded!==undefined&&typeof x.recorded!=='boolean')||(x.discount!==undefined&&typeof x.discount!=='boolean')||(x.discount===true&&(x.amount!==0||x.redeemed||x.recorded!==true))||(x.amount===0&&x.redeemed)))throw Error('獎金資料不正確');}
+ for(const [id]of catalog){const r=s.records[id];if(!Array.isArray(r)||r.length!==3||r.some(x=>!x||!amounts.includes(x.amount)||typeof x.redeemed!=='boolean'||(x.recorded!==undefined&&typeof x.recorded!=='boolean')||(x.discount!==undefined&&typeof x.discount!=='boolean')||(x.benefit!==undefined&&typeof x.benefit!=='boolean')||(x.discount===true&&x.benefit===true)||(x.benefit===true&&(x.amount!==0||x.recorded!==true))||(x.discount===true&&(x.amount!==0||x.recorded!==true))||(x.amount===0&&x.redeemed&&x.recorded!==true)))throw Error('獎金資料不正確');}
  if(Object.keys(s.records).some(id=>!catalog.some(c=>c[0]===id)))throw Error('不明支付 App 資料');
 }
 function fillLegacyBank(s){if(s?.records&&typeof s.records==='object'&&!Object.hasOwn(s.records,'taifung'))s.records.taifung=blank().taifung;}
@@ -65,8 +65,8 @@ function rollover(s,now=Date.now()){
 }
 const totals=rows=>rows.reduce((a,x)=>({total:a.total+x.amount,used:a.used+(x.redeemed?x.amount:0),left:a.left+(x.redeemed?0:x.amount)}),{total:0,used:0,left:0});
 const hasResult=x=>x.amount>0||x.recorded===true;
-const resultLabel=x=>hasResult(x)?(x.amount===0?(x.discount===true?'滿減':'謝謝參與'):String(x.amount)):'未抽';
-const slotAction=x=>!hasResult(x)||x.redeemed||x.amount===0?'pick':'redeem';
+const resultLabel=x=>hasResult(x)?(x.amount===0?(x.discount===true?'滿減劵':x.benefit===true?'禮遇劵':'謝謝參與'):String(x.amount)):'未抽';
+const slotAction=x=>!hasResult(x)?'pick':'redeem';
 function cumulative(s){const periods=[s,...s.history.filter(h=>h.origin==='auto')];const banks=catalog.map(([id])=>({id,amount:periods.reduce((sum,p)=>sum+totals(p.records[id]).total,0)}));return {banks,total:banks.reduce((sum,b)=>sum+b.amount,0)};}
 const api={cumulative,slotAction,hasResult,resultLabel,amounts,catalog,fresh,validate,upgrade,rollover,totals,periodAt,periodLabel,addDays};root.Rewards=api;if(typeof module!=='undefined')module.exports=api;
 })(globalThis);
